@@ -20,22 +20,17 @@ import React, {
   
   // Define the DataContextProvider component
   export function DataContextProvider({ children }: DataContextProviderProps) {
-    const [dataList, setDataList] = useState<LaunchData[] | undefined>(undefined);
+    const [dataList, setDataList] = useState<LaunchData[] | any>([]);
+
+    const fetchData = async() => {
+      await axios.get('https://api.spacexdata.com/v3/launches').then((res) => {
+        console.log(res.data, 'res')
+        setDataList(res.data)
+      }).catch((err) => {console.log(err)})
+    }
   
     useEffect(() => {
-      // Fetch data from the SpaceX API
-      async function fetchData() {
-        try {
-          const response = await axios.get('https://api.spacexdata.com/v3/launches');
-          if (response.status === 200) {
-            setDataList(response.data);
-          }
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      }
-  
-      fetchData();
+     fetchData()
     }, []);
   
     return (
