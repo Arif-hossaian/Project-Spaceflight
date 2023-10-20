@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { DataContext } from '../../../context/DataContext';
 
 const SearchBar = () => {
+  const { searchInput, setSearchInput, handleSearchSubmit } =
+    useContext(DataContext);
+
   return (
-    <form>
+    <form onSubmit={handleSearchSubmit}>
       <div className="flex">
         <div className="relative w-full">
           <input
@@ -10,7 +14,10 @@ const SearchBar = () => {
             id="search-dropdown"
             className="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-r-lg  border border-gray-300 focus:ring-blue-500 focus:border-blue-500 "
             placeholder="Search "
-            required
+            value={searchInput}
+            onChange={(e) => {
+              setSearchInput(e.target.value);
+            }}
           />
           <button
             type="submit"
@@ -35,6 +42,8 @@ const SearchBar = () => {
           </button>
         </div>
       </div>
+      {/* {filteredData.length > 0 &&
+        filteredData.map((item: any, index: any) => <p>{item}</p>)} */}
     </form>
   );
 };
