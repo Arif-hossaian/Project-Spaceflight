@@ -14,7 +14,8 @@ export function DataContextProvider({ children }: DataContextProviderProps) {
   const [dataList, setDataList] = useState<LaunchData[] | any>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [searchInput, setSearchInput] = useState('');
-  const [finalDataList, setFinalDataList] = useState([]);
+  const [selectStatus, setSelectStatus] = useState(null);
+  const [finalDataList, setFinalDataList] = useState(dataList);
 
   const fetchData = async () => {
     setIsLoading(true);
@@ -52,6 +53,33 @@ export function DataContextProvider({ children }: DataContextProviderProps) {
   };
 
   //console.log(finalDataList, 'fil;ter data');
+  const handleSelectStatus = (e: any) => {
+    const { value } = e.target;
+    setSelectStatus(value);
+  };
+
+  useEffect(() => {
+    filterSelectedStatus();
+  }, [selectStatus]);
+
+  const filterSelectedStatus = () => {
+    //console.log(selectStatus, 'filter status');
+    if (selectStatus === 'true') {
+      const filterItems = dataList.filter(
+        (item: any) => item.launch_success === true
+      );
+      ToasterMessage('Displaying data as launch status success');
+      setFinalDataList(filterItems);
+    } else if (selectStatus === 'false') {
+      const filterItems = dataList.filter(
+        (item: any) => item.launch_success === false
+      );
+      ToasterMessage('Displaying data as launch status failed');
+      setFinalDataList(filterItems);
+    } else {
+      setFinalDataList(dataList);
+    }
+  };
 
   return (
     <DataContext.Provider
@@ -62,6 +90,8 @@ export function DataContextProvider({ children }: DataContextProviderProps) {
         finalDataList,
         setFinalDataList,
         handleSearchSubmit,
+        handleSelectStatus,
+        filterSelectedStatus,
         isLoading,
       }}
     >

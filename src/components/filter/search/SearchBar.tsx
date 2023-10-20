@@ -42,8 +42,6 @@ const SearchBar = () => {
           </button>
         </div>
       </div>
-      {/* {filteredData.length > 0 &&
-        filteredData.map((item: any, index: any) => <p>{item}</p>)} */}
     </form>
   );
 };
