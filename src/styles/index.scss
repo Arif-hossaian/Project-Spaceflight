@@ -2,8 +2,38 @@
 @tailwind components;
 @tailwind utilities;
 
-.container{
-  @apply mx-auto max-w-screen-2xl 
+.container {
+  @apply mx-auto max-w-screen-md md:max-w-screen-2xl lg:max-w-screen-2xl px-5;
+}
+.pagination {
+  padding: 10px;
+  margin: 15px 0;
+  display: flex;
+  justify-content: center;
 }
 
+.pagination > span {
+  padding: 15px 20px;
+  border: 1px solid gray;
+  cursor: pointer;
+  color: blue;
+}
 
+.pagination__disable {
+  opacity: 0;
+}
+
+.pagination__selected {
+  background-color: blue;
+  color: white !important;
+}
+
+@media (max-width: 768px) {
+  .pagination {
+    width: 100%;
+  }
+
+  .pagination > span {
+    padding: 3px 3px;
+  }
+}
